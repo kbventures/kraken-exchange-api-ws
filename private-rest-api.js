@@ -1,13 +1,14 @@
 const axios = require("axios");
 const crypto = require('crypto');
 const WebSocket = require('ws');
+require('dotenv').config();
 
 
 const Main = async () => {
 
-    //TODO: UPDATE WITH YOUR KEYS :)
-    let apiPublicKey = ""
-    let apiPrivateKey = ""
+    // Load API keys from environment variables
+    const apiPublicKey = process.env.API_PUBLIC_KEY;
+    const apiPrivateKey = process.env.API_PRIVATE_KEY;
     
     try {
 
@@ -72,6 +73,12 @@ const Main = async () => {
         {
             headers: { 'API-Key': apiPublicKey, 'API-Sign': signature }
         };
+
+        console.log("Request URL:", apiEndpointFullURL);
+        console.log("Request Body:", apiPostBodyData);
+        console.log("Request Options:", httpOptions);
+        console.log("Request Options Headers:", httpOptions.headers);
+
 
         let jsonData = await axios.post(apiEndpointFullURL, apiPostBodyData, httpOptions);
 
